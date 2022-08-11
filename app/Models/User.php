@@ -38,6 +38,26 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password'
     ];
+    protected $appends = ['vaccine'];
+
+    public function getVaccineAttribute()
+    {
+        $vaccine = \DB::table('user_vaccine')
+                        ->join('vaccines','vaccines.id_vaccine','=','user_vaccine.id_vaccine')
+                        ->select(['dose', 'date', 'name', 'vaccines.id_vaccine'])
+                        ->where('id_user', $this->id_user)
+                        ->first();
+
+        if(!isset($vaccine)){
+            $vaccine = new \stdClass();
+            $vaccine->id_vaccine = -1;
+            $vaccine->date = '';
+            $vaccine->dose = 0;
+        }
+
+        return $vaccine;
+
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

@@ -11,7 +11,9 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::post('/createAdmin', [JWTController::class, 'createAdmin']);
 
 
-    Route::get('/getUsers', [UserController::class, 'get']);
+    Route::post('/updateUser', [UserController::class, 'update']);
+    Route::post('/getVaccines', [UserController::class, 'getVaccines']);
+    Route::post('/getUsers', [UserController::class, 'get']);
     Route::post('/storeUser', [UserController::class, 'store']);
     Route::post('/deleteUser', [UserController::class, 'delete']);
 });
